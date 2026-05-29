@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matthew Wissler — Photography & Events</title>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1a18;
+      --ink-light: #6b6b66;
+      --ink-faint: #9a9990;
+      --paper: #f8f7f4;
+      --accent: #c8b89a;
+      --rule: #e2e0da;
+      --serif: 'EB Garamond', Georgia, serif;
+      --mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #0d0d0b;
+      color: var(--paper);
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 3rem;
+      background: transparent;
+      transition: background 0.4s, border-color 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(13,13,11,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    /* ── HERO VIDEO ──────────────────────────── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+    }
+
+    #hero-video, #hero-video iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 56.25vw;
+      min-height: 100vh;
+      min-width: 177.78vh;
+      transform: translate(-50%, -50%);
+      border: 0;
+      pointer-events: none;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.15) 0%,
+        rgba(0,0,0,0.0) 40%,
+        rgba(0,0,0,0.7) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      padding: 0 3.5rem 4rem;
+      max-width: 700px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 400;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      max-width: 440px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .btn-outline {
+      display: inline-block;
+      padding: 0.65rem 1.6rem;
+      border: 1px solid rgba(255,255,255,0.5);
+      color: #fff;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.12);
+      border-color: #fff;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      right: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    /* ── SECTION SHARED ──────────────────────── */
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 3rem;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ── ABOUT ───────────────────────────────── */
+    #about {
+      background: #111110;
+    }
+
+    #about .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    #about h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--paper);
+      margin-bottom: 2rem;
+    }
+
+    #about h2 em { font-style: italic; color: var(--ink-faint); }
+
+    #about p {
+      color: rgba(248,247,244,0.6);
+      font-size: 1.05rem;
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .stat {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.2rem;
+    }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 400;
+      color: var(--paper);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    /* ── MASONRY GALLERY ─────────────────────── */
+    #work {
+      background: #0d0d0b;
+    }
+
+    .masonry {
+      columns: 3;
+      column-gap: 6px;
+    }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 6px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .masonry-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      filter: brightness(0.92);
+    }
+
+    .masonry-item:hover img {
+      transform: scale(1.04);
+      filter: brightness(1);
+    }
+
+    .masonry-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.2rem;
+    }
+
+    .masonry-item:hover .overlay {
+      background: rgba(0,0,0,0.25);
+    }
+
+    /* ── LIGHTBOX ────────────────────────────── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(0,0,0,0.95);
+      align-items: center;
+      justify-content: center;
+    }
+
+    #lightbox.open { display: flex; }
+
+    #lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+    }
+
+    #lightbox-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      cursor: pointer;
+      background: none;
+      border: none;
+      transition: color 0.2s;
+    }
+
+    #lightbox-close:hover { color: #fff; }
+
+    #lightbox-prev, #lightbox-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 1rem;
+      transition: color 0.2s;
+    }
+
+    #lightbox-prev:hover, #lightbox-next:hover { color: #fff; }
+    #lightbox-prev { left: 1.5rem; }
+    #lightbox-next { right: 1.5rem; }
+
+    /* ── CONTACT ─────────────────────────────── */
+    #contact {
+      background: #0d0d0b;
+    }
+
+    .contact-big {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--paper);
+      margin-bottom: 3rem;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-big em { font-style: italic; color: var(--ink-faint); }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem 2.5rem;
+      padding-top: 1rem;
+    }
+
+    .contact-link-item a {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(248,247,244,0.5);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding-bottom: 0.2rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .contact-link-item a:hover {
+      color: var(--paper);
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #0d0d0b;
+    }
+
+    footer span {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ── FADE-IN ─────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 900px) {
+      .masonry { columns: 2; }
+      #about .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .resume-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .resume-sticky { position: static; }
+      .contact-links { grid-template-columns: 1fr 1fr; }
+      .contact-link-item:nth-child(2) { border-right: none; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1.2rem 1.5rem; }
+      nav .nav-links { gap: 1.4rem; }
+      .section-inner { padding: 4rem 1.5rem; }
+      .hero-content { padding: 0 1.5rem 3rem; }
+      .masonry { columns: 1; }
+      .contact-links { grid-template-columns: 1fr; }
+      .contact-link-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-name">Matthew Wissler</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <iframe id="hero-video"
+    src="https://player.vimeo.com/video/1196541246?autoplay=1&muted=1&loop=1&background=1&controls=0"
+    frameborder="0"
+    allow="autoplay; fullscreen"
+    allowfullscreen
+  ></iframe>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Photography · Videography · Live Events</p>
+    <h1>Matthew<br><em>Wissler</em></h1>
+    <p class="hero-sub">I live in the pit so you don't have to.</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn-outline">View Work</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <p class="section-label fade-up">About</p>
+    <div class="about-grid">
+      <div>
+        <h2 class="fade-up">Built to shoot<br>the moments <em>nobody<br>else can get.</em></h2>
+        <p class="fade-up">I'm a photographer and videographer specializing in live music and events. I've shot in the pit at festivals, on stage at arena shows, and everywhere in between — from intimate club sets to 37,000-person crowds.</p>
+        <p class="fade-up">Alongside the camera work, I spent four years running large-scale events at UNH, which means I understand production from both sides of the barrier. I know how a show is built, and I know how to move through it.</p>
+        <p class="fade-up">Available for concerts, festivals, editorial, and brand work worldwide.</p>
+        <a href="#contact" class="btn-outline fade-up" style="display:inline-block;margin-top:2rem;">Let's Work Together</a>
+      </div>
+      <div class="fade-up about-img-wrap">
+        <img src="DJI_0240.jpg" alt="Aerial crowd shot" style="width:100%;display:block;aspect-ratio:3/4;object-fit:cover;" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK / GALLERY -->
+<section id="work">
+  <div class="section-inner">
+    <p class="section-label fade-up">Photography</p>
+    <div class="masonry" id="gallery">
+      <div class="masonry-item fade-up" data-index="0"><img src="MDW08711.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="1"><img src="MDW02490.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="3"><img src="MDW00934.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="4"><img src="MDW09770.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="5"><img src="MDW01788.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="6"><img src="MDW01432.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="7"><img src="MDW06901.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="8"><img src="MDW06261.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="9"><img src="MDW01185.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="10"><img src="MDW01981.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="11"><img src="MDW05641.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="12"><img src="MDW02619.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="13"><img src="MDW06855.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="14"><img src="MDW08506.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="15"><img src="MDW02506.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="16"><img src="MDW05590.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="17"><img src="MDW09480.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="18"><img src="MDW09828.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+      <div class="masonry-item fade-up" data-index="19"><img src="MDW08823.jpg" alt="Concert photography" loading="lazy"><div class="overlay"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close">Close ✕</button>
+  <button id="lightbox-prev">← Prev</button>
+  <img id="lightbox-img" src="" alt="" />
+  <button id="lightbox-next">Next →</button>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner" style="text-align:center">
+    <p class="section-label fade-up">Contact</p>
+    <p class="contact-big fade-up">Let's shoot<br>something worth <em>remembering.</em></p>
+    <div class="contact-links fade-up">
+      <div class="contact-link-item"><a href="mailto:mwissler@wisslerstudios.com">mwissler@wisslerstudios.com</a></div>
+      <div class="contact-link-item"><a href="https://www.wisslerstudios.com" target="_blank" rel="noopener">wisslerstudios.com</a></div>
+      <div class="contact-link-item"><a href="https://linkedin.com/in/matthewwissler" target="_blank" rel="noopener">LinkedIn</a></div>
+      <div class="contact-link-item"><a href="https://instagram.com/wisslerstudios" target="_blank" rel="noopener">@wisslerstudios</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>Matthew Wissler</span>
+  <span>© 2026</span>
+</footer>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Fade-up on scroll
+  const faders = document.querySelectorAll('.fade-up');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 40);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  faders.forEach(el => obs.observe(el));
+
+  // Lightbox
+  const images = Array.from(document.querySelectorAll('.masonry-item img'));
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  let current = 0;
+
+  function openLightbox(idx) {
+    current = idx;
+    lbImg.src = images[idx].src;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.masonry-item').forEach(item => {
+    item.addEventListener('click', () => openLightbox(parseInt(item.dataset.index)));
+  });
+
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+
+  document.getElementById('lightbox-prev').addEventListener('click', () => {
+    current = (current - 1 + images.length) % images.length;
+    lbImg.src = images[current].src;
+  });
+
+  document.getElementById('lightbox-next').addEventListener('click', () => {
+    current = (current + 1) % images.length;
+    lbImg.src = images[current].src;
+  });
+
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') { current = (current - 1 + images.length) % images.length; lbImg.src = images[current].src; }
+    if (e.key === 'ArrowRight') { current = (current + 1) % images.length; lbImg.src = images[current].src; }
+  });
+</script>
+
+</body>
+</html>
