@@ -70,12 +70,15 @@
     }
 
     .nav-name {
-      font-family: var(--serif);
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
+      display: block;
+      line-height: 0;
       text-decoration: none;
-      color: #fff;
+    }
+
+    .nav-name img {
+      display: block;
+      height: 30px;
+      width: auto;
     }
 
     .nav-links {
@@ -548,7 +551,7 @@
 
 <!-- NAV -->
 <nav id="main-nav">
-  <a href="#hero" class="nav-name">Matthew Wissler</a>
+  <a href="#hero" class="nav-name"><img src="mwlogo-white.webp" alt="Matthew Wissler" width="49" height="30"></a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
